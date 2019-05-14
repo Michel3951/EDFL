@@ -1,0 +1,34 @@
+body, html {
+    height: 100% !important;
+    background: #202225;
+    color: #dcddde;
+}
+
+body {
+    overflow:hidden;
+}
+
+.card {
+    background: #2f3136 !important;
+    border: none;
+}
+
+.form-control {
+    color: #dcddde !important;
+    background-color: rgba(114,118,125,.3) !important;
+    border-radius: 5px !important;
+    border: 0 !important;
+}
+
+.form-control:focus {
+    box-shadow: none;
+}
+
+#drag:hover {
+    cursor: move;
+}
+
+main {
+    background-color: #36393f;
+    min-height: 100%;
+}

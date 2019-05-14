@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Elite Dangerous Flight Log</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/fontawesome/css/all.css">
+</head>
+<body>
+<header class="text-right">
+    <div class="col">
+        <div class="row">
+            <div class="col-10 text-left" id="drag" style="-webkit-app-region: drag">
+                <span>Elite Dangerous Rich Presence</span>
+            </div>
+            <div class="col-2 text-right">
+                <a href="#" class="text-white mr-2" id="hide"><i class="fas fa-minus"></i></a>
+                <a href="#" class="text-danger" id="close"><i class="fas fa-times"></i></a>
+            </div>
+        </div>
+    </div>
+</header>
+<main>
+    <div class="col">
+        <div class="row">
+            <div class="col-sm-9 py-3">
+                <label for="webhook-url">Webhook URL</label>
+                <div class="form-group row">
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="webhook-url">
+                    </div>
+                    <div class="col-sm-3">
+                        <select name="webhook" id="webhook" class="form-control">
+                            <option value="0">Disabled</option>
+                            <option value="1">Enabled</option>
+                        </select>
+                    </div>
+                </div>
+                <hr>
+                <h5>Details</h5>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <p>
+                            System: <br>
+                            <span id="system">Unknown</span>
+                        </p>
+                        <p>
+                            Docked: <br>
+                            <span id="docked">Unknown</span>
+                        </p>
+                        <p>
+                            Jump target: <br>
+                            <span id="target">None</span>
+                        </p>
+                    </div>
+                    <div class="col-sm-6">
+                        <p>
+                            Commander Name: <br>
+                            <span id="cmdr">Unknown</span>
+                        </p>
+                        <p>
+                            Ship: <br>
+                            <span id="ship">Unknown</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3 py-3" style="background-color: #2f3136 !important; height: 100vh;">
+                <p>Discord: <br>
+                    <span id="discord-connection" style="color: darkorange">Connecting...</span>
+                </p>
+                <hr>
+                <p>Elite Dangerous: <br>
+                    <span id="elite-connection" style="color: darkorange">Fetching...</span>
+                </p>
+            </div>
+        </div>
+    </div>
+</main>
+<script src="./assets/renderer.js"></script>
+</body>
+</html>
