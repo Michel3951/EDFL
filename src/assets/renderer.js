@@ -1,8 +1,7 @@
 'use strict';
 
-let fs = require('fs');
+const EDFL = require('../plugins/EDFL/src/index');
 const $ = require('jquery');
-const path = require('path');
 const {remote} = require('electron');
 
 $('#hide').on('click', () => {
@@ -15,21 +14,18 @@ $('#close').on('click', () => {
     window.close();
 });
 
-updateDetails();
+let latest = $('#latest');
 
-setInterval(() => {
-    updateDetails()
-}, 10e3);
+const client = new EDFL.EliteDangerousProcess();
 
-function updateDetails() {
-    let root = `${path.dirname(require.main.filename)}/..`;
-    if (fs.existsSync(`${root}/latest.json`)) {
-        let latest = JSON.parse(fs.readFileSync(`${root}/latest.json`, 'utf-8'));
-        let window = remote.getCurrentWindow();
-        $('#system').text(latest.system || 'Unknown');
-        $('#cmdr').text(latest.cmdr || 'Unknown');
-        $('#ship').text(latest.ship || 'Unknown');
-        $('#docked').text(latest.docked || 'No');
-        $('#target').text(latest.jumpTarget || 'Not set');
+client.on('scan', (body) => {
+    let text = '<hr><p>Event: Scan';
+    if (body.isStar()) {
+        let star = body.getStarDetails();
+        text += `<br>Type: Star (${star.type})<br>Name: ${star.name}<br>Mass: ${star.mass}<br>Luminosity: ${star.luminosity}`
+    } else if (body.isPlanet()) {
+        let planet = body.getPlanetDetails();
+        text += `<br>Type: Planet / Moon<br>Name: ${planet.name}<br>Landable: ${planet.landable ? 'Yes' : 'No'}<br>Atmosphere: ${planet.atmosphere ? 'Yes' : 'No'}</p>`
     }
-}
+    latest.prepend(text);
+});

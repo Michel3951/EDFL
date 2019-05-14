@@ -26,12 +26,6 @@ const createWindow = () => {
   // and load the index.html of the app.
   mainWindow.loadURL(`file://${__dirname}/index.html`);
 
-  const client = new EDFL.EliteDangerousProcess();
-
-  client.on('scan', (event) => {
-    console.log(event.getPlanetDetails())
-  });
-
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
 
