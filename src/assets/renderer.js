@@ -16,15 +16,15 @@ $('#close').on('click', () => {
 
 let latest = $('#latest');
 let eliteSpan = $('#elite-connection');
-const elite = new EDFL.EliteDangerousProcess();
+const elite = new EDFL.EliteDangerousProcess({webhook: true});
 
 elite.on('ready', (boolean) => {
-    eliteSpan.css('color', '#43ff00');
+    eliteSpan.css('color', 'green');
     eliteSpan.text('Process found.');
 });
 
 elite.on('shutdown', () => {
-    eliteSpan.css('color', '#ff0000');
+    eliteSpan.css('color', 'red');
     eliteSpan.text('Process not found.');
 });
 

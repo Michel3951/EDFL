@@ -1,10 +1,15 @@
 const {root} = require('./util/Constants');
 const EventHandler = require('./util/EventHandler');
+const DiscorRichPresence = require('./structures/DiscordRichPresence');
 
 class EliteDangerousProcess extends EventHandler {
     constructor(options = {}) {
-        super();
-        this.isRunning();
+        super(options);
+        let running = this.isRunning();
+        // if (running) {
+            this.rpc = new DiscorRichPresence();
+            this.rpc.start();
+        // }
     }
 
     isRunning() {
@@ -29,10 +34,12 @@ class EliteDangerousProcess extends EventHandler {
             let running = !!(stdout.toLowerCase().indexOf(query.toLowerCase()) > -1);
             if (running) {
                 this.emit ('ready', true);
+                return true;
             } else {
                 setTimeout(() => {
                     this.isRunning();
                 }, 5000);
+                return false;
             }
         });
     }
