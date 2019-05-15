@@ -10,7 +10,6 @@ class Scan extends CelestialBody {
         this.distanceFromStart = json.DistanceFromArrivalLS;
         this.starClass = json.StarType;
     }
-
 }
 
 module.exports = Scan;

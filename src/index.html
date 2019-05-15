@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
-    <title>Elite Dangerous Flight Log</title>
+    <title>Elite Dangerous Flight Logger</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/style.css">
     <link rel="stylesheet" href="assets/fontawesome/css/all.css">
@@ -12,7 +13,7 @@
     <div class="col">
         <div class="row">
             <div class="col-10 text-left" id="drag" style="-webkit-app-region: drag">
-                <span>Elite Dangerous Flight Log</span>
+                <span>Elite Dangerous Flight Logger</span>
             </div>
             <div class="col-2 text-right">
                 <a href="#" class="text-white mr-2" id="hide"><i class="fas fa-minus"></i></a>
@@ -38,9 +39,11 @@
                     </div>
                 </div>
                 <hr>
-                <h5>Log</h5>
-                <div id="latest">
+                <div id="latest-container">
+                    <h5>Watcher</h5>
+                    <div id="latest">
 
+                    </div>
                 </div>
             </div>
             <div class="col-sm-3 py-3" style="background-color: #2f3136 !important; height: 100vh;">
@@ -49,7 +52,7 @@
                 </p>
                 <hr>
                 <p>Elite Dangerous: <br>
-                    <span id="elite-connection" style="color: darkorange">Fetching...</span>
+                    <span id="elite-connection" style="color: #ff0000">Process not found.</span>
                 </p>
             </div>
         </div>
