@@ -2,7 +2,7 @@
 
 const EDFL = require('../plugins/EDFL/src/index');
 const $ = require('jquery');
-const {remote} = require('electron');
+const remote = require('electron').remote;
 
 $('#hide').on('click', () => {
     let window = remote.getCurrentWindow();
@@ -16,11 +16,22 @@ $('#close').on('click', () => {
 
 let latest = $('#latest');
 let eliteSpan = $('#elite-connection');
-const elite = new EDFL.EliteDangerousProcess({webhook: true});
+let discordSpan = $('#discord-connection');
+
+const elite = new EDFL.EliteDangerousProcess();
 
 elite.on('ready', (boolean) => {
-    eliteSpan.css('color', 'green');
+    eliteSpan.css('color', 'limegreen');
     eliteSpan.text('Process found.');
+});
+
+elite.on('fatal', (error) => {
+   $('main .col-sm-9:first').prepend(`<div class="alert alert-danger">${error.message}</div>`)
+});
+
+elite.on('discord-connection', () => {
+    discordSpan.css('color', 'limegreen');
+    discordSpan.text('Connected.');
 });
 
 elite.on('shutdown', () => {
@@ -53,7 +64,6 @@ elite.on('fsdjump', (jump) => {
 elite.on('fsdtarget', (jump) => {
     let text = '<hr><p>Event: FSD Target<br>';
     let system = jump.getTarget();
-    console.log(system)
     text += `System: ${system.name}ly<br>`;
     latest.prepend(text);
 });
@@ -70,3 +80,53 @@ elite.on('startjump', (event) => {
     }
     latest.prepend(text);
 });
+
+let webhook = $('#webhook');
+
+elite.on('webhook-enabled', hook => {
+    $('#webhook-url').val(hook.url);
+});
+
+webhook.change(function () {
+    if (webhook.val() == 1) {
+        show('#webhook-modal')
+    } else {
+        webhook.val(0)
+    }
+});
+
+function setValue(element, value) {
+    $(element).val(value);
+}
+
+function hide(element) {
+    $(element).css('display', 'none');
+}
+
+function show(element) {
+    $(element).css('display', 'block')
+}
+
+function restart() {
+    remote.getCurrentWindow().reload();
+}
+
+async function enableHook() {
+    let value = $('#webhook-url').val().replace(/\s+/, '');
+    if (!value) {
+        $('#error-modal .content').text('Please specify a webhook URL.');
+        hide('#webhook-modal');
+        setValue('#webhook', '0');
+        show('#error-modal');
+        return;
+    }
+    if (!value.match(/https:\/\/discordapp\.com\/api\/webhooks\/[0-9]+\/[a-zA-Z0-9_]+/)) {
+        $('#error-modal .content').text('Webhook URL does not look like a discord webhook (https://discordapp.com/api/webhooks/[0-9]/[a-zA-Z0-9_]).');
+        hide('#webhook-modal');
+        setValue('#webhook', '0');
+        show('#error-modal');
+        return;
+    }
+    await elite.enableWebHook(value);
+    restart();
+}

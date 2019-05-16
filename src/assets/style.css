@@ -100,3 +100,7 @@ main {
         height: 63vh
     }
 }
+
+.modal {
+    display:none;
+}
